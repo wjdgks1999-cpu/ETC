@@ -22,7 +22,7 @@ import pandas as pd
 # 0. 데이터 불러오기
 # ============================================================
 
-df = pd.read_csv(r'한국과학창의재단_과학기술인재진로지원센터_게시물정보(2026)(정비).csv', encoding="cp949")
+df = pd.read_csv(r'data.csv', encoding="cp949")
 df.shape
 df.head(1)
 df.info()
