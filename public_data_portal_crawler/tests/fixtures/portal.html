@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><title>가상 포털 검증 예제</title>
+<body><main id="contents">
+<div class="apply-result">
+  <div class="apply-result-item"><div class="in-result-item">
+    <div class="apply-result-link"><a href="https://www.data.go.kr/data/1/fileData.do">예제 파일</a></div>
+    <ul><li><strong>제공기관</strong> 예제기관</li></ul>
+  </div></div>
+  <div class="apply-result-item"><div class="in-result-item">
+    <div class="apply-result-link"><a href="https://www.data.go.kr/data/2/openapi.do">예제 API</a></div>
+    <ul><li><strong>제공기관</strong> 다른기관</li><li><strong>조회수</strong> 1,234회</li><li><strong>활용신청</strong> 56건</li></ul>
+  </div></div>
+</div>
+<div id="apiDataList"><div class="result-list"><ul><li>
+  <dl><dt><a href="https://www.data.go.kr/data/3/openapi.do"><span class="title">이전 화면 API</span></a></dt></dl>
+  <div class="info-data"><span class="tit">제공기관</span><span class="data">예제기관</span><span class="tit">조회수</span><span class="data">20</span><span class="tit">활용신청</span><span class="data">3</span></div>
+</li></ul></div></div>
+<h1>공공데이터 활용사례</h1>
+<div class="card-wrap type2"><div class="item"><div class="card-txt-box">
+  <div class="card-category"><span>교통물류</span> <span>웹사이트</span></div>
+  <a class="card-txt" href="javascript:fn_view('123456')"><div class="card-title">가상 서비스</div><div class="card-summary">검증용 예제입니다.</div></a>
+  <span class="card-date">2026-11-17</span>
+</div></div></div>
+<ul class="viw-etc"><li>서비스 URL : 제공하지 않음</li></ul>
+<div class="used-data"><a href="https://www.data.go.kr/data/2/openapi.do">바로가기</a></div>
+</main><script>
+// 클릭된 활용사례 번호를 기록해 실제 페이지 이동 없이 클릭 결과를 검증한다.
+function fn_view(id) { window.selectedCase = id; }
+</script></body></html>

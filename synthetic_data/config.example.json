@@ -1,0 +1,18 @@
+{
+  "origin_path": "data/original.xlsx",
+  "synthetic_path": "outputs/synthetic_data.xlsx",
+  "threshold_path": "outputs/threshold_results.xlsx",
+  "evaluation_path": "outputs/evaluation_results.xlsx",
+  "column_types": {},
+  "risk_columns": null,
+  "metadata_overrides": {},
+  "primary_key": null,
+  "threshold": {"iterations": 100, "percentile": 90, "seed": 0},
+  "generation": {
+    "num_rows": 10000,
+    "epochs": 2000,
+    "locales": ["ko_KR"],
+    "seed": 0,
+    "enable_gpu": true
+  }
+}

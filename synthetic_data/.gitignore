@@ -1,0 +1,5 @@
+# 로컬 원본·결과·실행 설정과 Python 캐시를 공개 코드에서 분리한다.
+/config.json
+/data/
+/outputs/
+__pycache__/

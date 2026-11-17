@@ -1,0 +1,8 @@
+pandas==2.3.3
+numpy==2.5.5
+scipy==1.18.1
+openpyxl==3.1.5
+sdv==2.2.0
+sdmetrics==0.33.0
+ctgan==0.13.0
+torch==2.15.0
