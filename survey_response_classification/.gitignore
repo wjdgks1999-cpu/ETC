@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+inputs/
+outputs/
+config.local*.json
+.env

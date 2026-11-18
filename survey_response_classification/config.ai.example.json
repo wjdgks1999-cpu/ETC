@@ -1,0 +1,9 @@
+{
+  "mode": "ai",
+  "question": "AI 서비스 개발에 도움이 되도록 우선 개방했으면 하는 항목은 무엇입니까?",
+  "answer_column": "AI수요",
+  "id_column": "응답번호",
+  "sheet": 0,
+  "model": "gpt-4o-mini",
+  "timeout": 60
+}

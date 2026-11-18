@@ -1,0 +1,9 @@
+{
+  "mode": "general",
+  "question": "공공데이터 개방과 활용에 관한 의견을 작성해 주세요.",
+  "answer_column": "의견",
+  "id_column": "응답번호",
+  "sheet": 0,
+  "model": "gpt-4o-mini",
+  "timeout": 60
+}
