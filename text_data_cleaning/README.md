@@ -1,6 +1,10 @@
 # 텍스트 데이터 정제
 
-**공공기관 데이터에 존재하는 장문 텍스트를 정리하는 데** 사용한 코드입니다. 게시글·공고문 본문에 섞인 HTML을 제거하고, 개인정보가 포함된 문구를 삭제하는 작업을 LangChain으로 보조합니다.
+공공기관 데이터의 장문 텍스트를 정제하는 데 사용한 업무 절차를 담은 코드입니다. 
+
+실제 업무에서는 LangChain을 로컬 환경에서 구동하는 LLM에 연결해 게시글·공고문 본문의 HTML을 제거하고 개인정보가 포함된 문구를 삭제했습니다. 
+
+현재 코드는 이 두 작업에 OpenAI API를 사용하며, 선택한 컬럼의 본문을 행별로 전송합니다.
 
 ## 사용 목적과 업무 활용
 
@@ -15,22 +19,22 @@
 | `privacy` | 공고문에서 개인정보가 포함된 문구 삭제 | 이름만 바꾸는 방식이 아니라 개인정보가 있는 문구 전체를 삭제하도록 요청 |
 
 
-두 작업은 독립적으로 실행할 수 있으며, 필요하면 HTML 결과를 개인정보 정제로 연결할 수 있습니다. 
+두 작업은 독립적으로 실행할 수 있으며, 필요하면 HTML 결과를 개인정보 정제로 연결할 수 있습니다.
 
 ## 코드 구조
 
 ```mermaid
-flowchart TD  
-    entry["clean.py<br/>html · privacy 명령"] --> config["config.py<br/>컬럼·인코딩·모델·프롬프트 설정"]  
-    entry --> workflow["workflow.py<br/>행별 처리·저장·재개"]  
-    input["CSV · Excel<br/>원본 데이터"] --> storage["storage.py<br/>입력값·행 대응·파일 보호"]  
-    storage --> workflow  
-    config --> workflow  
-    workflow --> model["model.py<br/>지시와 본문 분리·구조화 출력 검증"]  
-    prompts["prompts/html.md · privacy.md"] --> model  
-    model <--> llm["LangChain · ChatOpenAI"]  
-    model --> workflow  
-    workflow --> output["결과 Excel<br/>data · processing · run"]  
+flowchart TD    
+    entry["clean.py<br/>html · privacy 명령"] --> config["config.py<br/>컬럼·인코딩·모델·프롬프트 설정"]    
+    entry --> workflow["workflow.py<br/>행별 처리·저장·재개"]    
+    input["CSV · Excel<br/>원본 데이터"] --> storage["storage.py<br/>입력값·행 대응·파일 보호"]    
+    storage --> workflow    
+    config --> workflow    
+    workflow --> model["model.py<br/>지시와 본문 분리·구조화 출력 검증"]    
+    prompts["prompts/html.md · privacy.md"] --> model    
+    model <--> llm["LangChain · ChatOpenAI"]    
+    model --> workflow    
+    workflow --> output["결과 Excel<br/>data · processing · run"]    
     output --> review["원문 대조·결과 검토"]
 ```
 
@@ -39,13 +43,13 @@ flowchart TD
 Python 3.13 환경에서 이 폴더를 작업 디렉터리로 사용합니다. 원본을 `inputs/`, 결과를 `outputs/`에 두고 실행합니다. 기본 본문 컬럼은 `내용`, CSV 인코딩은 `cp949`, Excel 시트는 첫 번째입니다.
 
 ```powershell
-python -m pip install -r requirements.txt  
-python clean.py html --input inputs/data.csv --output outputs/html.xlsx  
+python -m pip install -r requirements.txt    
+python clean.py html --input inputs/data.csv --output outputs/html.xlsx    
 python clean.py privacy --input outputs/html.xlsx --output outputs/privacy.xlsx
 ```
 
-CSV와 `.xlsx` 모두 입력할 수 있으며 출력은 `.xlsx`입니다. 다른
-컬럼·인코딩·시트·모델을 사용하려면 `config.example.json`을 `config.local.json`으로 복사해 수정하고 `--config config.local.json`을 지정합니다. `prompt_path`를 설정하면 JSON 위치를 기준으로 사용자 프롬프트를 읽습니다. 프롬프트 파일에는 작업 지시만 작성하며 본문은 별도 사용자 메시지로 전달합니다.
+CSV와 `.xlsx` 모두 입력할 수 있으며 출력은 `.xlsx`입니다.
+다른컬럼·인코딩·시트·모델을 사용하려면 `config.example.json`을 `config.local.json`으로 복사해 수정하고 `--config config.local.json`을 지정합니다. `prompt_path`를 설정하면 JSON 위치를 기준으로 사용자 프롬프트를 읽습니다. 프롬프트 파일에는 작업 지시만 작성하며 본문은 별도 사용자 메시지로 전달합니다.
 
 - **입력 보존:** CSV는 앞자리 0과 `NA` 등을 문자열로 유지합니다. Excel은 선택한 시트의 셀 값을 읽으며 서식·다른 시트를 복제하지 않습니다. 수식은 값으로 확정한 별도 입력을 사용합니다. 본문이 아닌 컬럼과 원본 파일은 변경하지 않습니다.
 - **처리 제한:** 요청 제한 시간의 기본 설정은 60초이며 `timeout`으로 조정합니다. 자동 재시도는 하지 않습니다. Excel 셀 한도를 넘는 긴 값이나 저장할 수 없는 제어문자는 자동으로 잘라내지 않고 오류로 알립니다.
